@@ -1,0 +1,27 @@
+{%extends "blog/base.html"%}
+{%block title%}
+	<title>Dashboard</title>
+{%endblock title%}
+
+
+{% load crispy_forms_tags %}
+{%block content%}
+	<h1>{{user.username}}'s Dashboard</h1>
+	{%for post in posts%}
+	{%ifequal user.username post.author.username %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <a class="mr-2" href="#">{{ post.author }}</a>
+		      <small class="text-muted">{{ post.date_posted }}</small>
+		    	<a class="btn btn-secondary btn-sm mb-2" href= "{% url 'post-update' post.id %}"> Edit </a>  
+		    	<a class="btn btn-secondary btn-sm mb-2" href= "{% url 'post-delete' post.id %}"> Delete </a>  
+
+		    </div>
+		    <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+		    <p class="article-content">{{ post.content }}</p>
+		  </div>
+		</article>
+		{%endifequal%}
+		{%endfor%}
+{%endblock content%}
